@@ -59,8 +59,8 @@ daily_stock_analysis/
 
 | Secret 名称 | 说明 | 必填 |
 |------------|------|:----:|
-| `ANSPIRE_API_KEYS` | [Anspire](https://open.anspire.cn/?share_code=QFBC0FYC) API Key，一 Key 同时启用大模型和中文优化联网搜索，含本项目免费额度 | 推荐 |
-| `AIHUBMIX_KEY` | [AIHubMix](https://aihubmix.com/?aff=CfMq) API Key，一 Key 切换使用全系模型，本项目可享 10% 优惠 | 推荐 |
+| `ANSPIRE_API_KEYS` | [Anspire](https://open.anspire.cn/) API Key，一 Key 同时启用大模型和中文优化联网搜索，含本项目免费额度 | 推荐 |
+| `AIHUBMIX_KEY` | [AIHubMix](https://aihubmix.com/) API Key，一 Key 切换使用全系模型，本项目可享 10% 优惠 | 推荐 |
 | `GEMINI_API_KEY` | [Google AI Studio](https://aistudio.google.com/) 获取免费 Key | 可选 |
 | `ANTHROPIC_API_KEY` | Anthropic Claude API Key | 可选 |
 | `OPENAI_API_KEY` | OpenAI 兼容 API Key（支持 DeepSeek、通义千问等） | 可选 |
@@ -128,7 +128,7 @@ daily_stock_analysis/
 |------------|------|:----:|
 | `STOCK_LIST` | 自选股代码，如 `600519,300750,002594` | ✅ |
 | `ANSPIRE_API_KEYS` | [Anspire AI Search](https://aisearch.anspire.cn/) 针对中文内容特别优化；同一 Key 可用于搜索与 Anspire 大模型网关的兜底示例（是否可用以控制台与账号权限为准） | 推荐 |
-| `SERPAPI_API_KEYS` | [SerpAPI](https://serpapi.com/baidu-search-api?utm_source=github_daily_stock_analysis) 搜索引擎结果补强，适合实时金融新闻 | 推荐 |
+| `SERPAPI_API_KEYS` | [SerpAPI](https://serpapi.com/baidu-search-api) 搜索引擎结果补强，适合实时金融新闻 | 推荐 |
 | `TAVILY_API_KEYS` | [Tavily](https://tavily.com/) 搜索 API（新闻搜索） | 可选 |
 | `BOCHA_API_KEYS` | [博查搜索](https://open.bocha.cn/) Web Search API（中文搜索优化，支持AI摘要，多个key用逗号分隔） | 可选 |
 | `BRAVE_API_KEYS` | [Brave Search](https://brave.com/search/api/) API（隐私优先，美股优化，多个key用逗号分隔） | 可选 |
@@ -158,7 +158,7 @@ daily_stock_analysis/
 
 如果你想快速开始，最少需要配置以下项：
 
-1. **AI 模型**：`ANSPIRE_API_KEYS`（一 Key 同时启用大模型和搜索）、`AIHUBMIX_KEY`（[AIHubmix](https://aihubmix.com/?aff=CfMq)，一 Key 多模型）、`GEMINI_API_KEY` 或 `OPENAI_API_KEY`
+1. **AI 模型**：`ANSPIRE_API_KEYS`（一 Key 同时启用大模型和搜索）、`AIHUBMIX_KEY`（[AIHubmix](https://aihubmix.com/)，一 Key 多模型）、`GEMINI_API_KEY` 或 `OPENAI_API_KEY`
 2. **通知渠道**：至少配置一个，如 `WECHAT_WEBHOOK_URL` 或 `EMAIL_SENDER` + `EMAIL_PASSWORD`
 3. **股票列表**：`STOCK_LIST`（必填）
 4. **搜索 API**：`ANSPIRE_API_KEYS` 或 `SERPAPI_API_KEYS`（推荐，用于新闻与舆情搜索）
@@ -198,8 +198,8 @@ daily_stock_analysis/
 | `LITELLM_FALLBACK_MODELS` | 备选模型，逗号分隔 | - | 否 |
 | `LLM_CHANNELS` | 渠道名称列表（逗号分隔），配合 `LLM_{NAME}_*` 使用，详见 [LLM 配置指南](LLM_CONFIG_GUIDE.md) | - | 否 |
 | `LITELLM_CONFIG` | 高级模型路由 YAML 配置文件路径（高级） | - | 否 |
-| `ANSPIRE_API_KEYS` | [Anspire](https://open.anspire.cn/?share_code=QFBC0FYC) API Key，一 Key 同时启用大模型网关和搜索 | - | 可选 |
-| `AIHUBMIX_KEY` | [AIHubmix](https://aihubmix.com/?aff=CfMq) API Key，一 Key 切换使用全系模型，无需额外配置 Base URL | - | 可选 |
+| `ANSPIRE_API_KEYS` | [Anspire](https://open.anspire.cn/) API Key，一 Key 同时启用大模型网关和搜索 | - | 可选 |
+| `AIHUBMIX_KEY` | [AIHubmix](https://aihubmix.com/) API Key，一 Key 切换使用全系模型，无需额外配置 Base URL | - | 可选 |
 | `GEMINI_API_KEY` | Google Gemini API Key | - | 可选 |
 | `GEMINI_MODEL` | 主模型名称（legacy，`LITELLM_MODEL` 优先） | `gemini-3.1-pro-preview` | 否 |
 | `GEMINI_MODEL_FALLBACK` | 备选模型（legacy） | `gemini-3-flash-preview` | 否 |
@@ -356,16 +356,16 @@ Dockerfile 使用多阶段构建，前端会在构建镜像时自动打包并内
 如需覆盖静态资源，可挂载本地 `static/` 到容器内 `/app/static`。
 运行中的 `server` 容器默认直接复用 `/app/static` 里的预构建产物，不要求容器内保留 `apps/dsa-web` 源码目录或运行时安装 `npm`；若 WebUI 无法打开，请优先确认 `/app/static/index.html` 是否存在。
 
-当前官方镜像发布地址：
+镜像发布地址：
 
-- GHCR：`ghcr.io/zhulinsen/daily_stock_analysis:<tag>`
-- Docker Hub：`<DOCKERHUB_USERNAME>/daily_stock_analysis:<tag>`（由发布者的 `DOCKERHUB_USERNAME` secret 决定，官方发布为 `zhulinsen/daily_stock_analysis`）
+- GHCR：`ghcr.io/<GHCR_NAMESPACE>/daily_stock_analysis:<tag>`
+- Docker Hub：`<DOCKERHUB_USERNAME>/daily_stock_analysis:<tag>`（由发布者的 `DOCKERHUB_USERNAME` secret 决定）
 
 ### 快速启动
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/ZhuLinsen/daily_stock_analysis.git
+git clone https://github.com/DesayGo/daily_stock_analysis.git
 cd daily_stock_analysis
 
 # 2. 配置环境变量
@@ -384,13 +384,13 @@ docker-compose -f ./docker/docker-compose.yml up -d            # 同时启动两
 docker-compose -f ./docker/docker-compose.yml logs -f server
 ```
 
-### 直接拉官方镜像运行
+### 直接拉镜像运行
 
-如果你不打算在目标机器上保留源码，可以直接拉取官方镜像：
+如果你不打算在目标机器上保留源码，可以直接拉取已发布镜像：
 
 ```bash
 # Web/API 模式
-docker pull zhulinsen/daily_stock_analysis:latest
+docker pull <DOCKERHUB_USERNAME>/daily_stock_analysis:latest
 docker run -d \
   --name dsa-server \
   --env-file .env \
@@ -399,7 +399,7 @@ docker run -d \
   -v "$(pwd)/logs:/app/logs" \
   -v "$(pwd)/reports:/app/reports" \
   -v "$(pwd)/.env:/app/.env" \
-  zhulinsen/daily_stock_analysis:latest \
+  <DOCKERHUB_USERNAME>/daily_stock_analysis:latest \
   python main.py --serve-only --host 0.0.0.0 --port 8000
 
 # 定时任务模式
@@ -410,7 +410,7 @@ docker run -d \
   -v "$(pwd)/logs:/app/logs" \
   -v "$(pwd)/reports:/app/reports" \
   -v "$(pwd)/.env:/app/.env" \
-  zhulinsen/daily_stock_analysis:latest
+  <DOCKERHUB_USERNAME>/daily_stock_analysis:latest
 ```
 
 如需固定版本或便于回滚，请将 `latest` 替换为具体版本 tag，例如 `v3.13.0`。
@@ -1184,7 +1184,7 @@ A: 检查是否启用了 Actions，以及 cron 表达式是否正确（注意是
 
 ---
 
-更多问题请 [提交 Issue](https://github.com/ZhuLinsen/daily_stock_analysis/issues)
+更多问题请 [提交 Issue](https://github.com/DesayGo/daily_stock_analysis/issues)
 
 ## Agent 工具数据缓存与持久化
 

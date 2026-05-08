@@ -2,17 +2,9 @@
 
 # 股票智能分析系統
 
-[![GitHub stars](https://img.shields.io/github/stars/ZhuLinsen/daily_stock_analysis?style=social)](https://github.com/ZhuLinsen/daily_stock_analysis/stargazers)
-[![CI](https://github.com/ZhuLinsen/daily_stock_analysis/actions/workflows/ci.yml/badge.svg)](https://github.com/ZhuLinsen/daily_stock_analysis/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Ready-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/zhulinsen/daily_stock_analysis)
-
-<p align="center">
-  <a href="https://trendshift.io/repositories/18527" target="_blank"><img src="https://trendshift.io/api/badge/repositories/18527" alt="ZhuLinsen%2Fdaily_stock_analysis | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-  <a href="https://hellogithub.com/repository/ZhuLinsen/daily_stock_analysis" target="_blank"><img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=6daa16e405ce46ed97b4a57706aeb29f&claim_uid=pfiJMqhR9uvDGlT&theme=neutral" alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-</p>
 
 **基於 AI 大模型的 A股/港股/美股自選股智能分析系統**
 
@@ -24,15 +16,6 @@
 
 繁體中文 | [English](README_EN.md) | [简体中文](../README.md)
 
-</div>
-
-## 💖 贊助商 (Sponsors)
-
-<div align="center">
-  <p align="center">
-    <a href="https://open.anspire.cn/?share_code=QFBC0FYC" target="_blank"><img src="../sources/anspire.png" alt="Anspire Open 一站式模型和搜尋服務" width="300" height="141" style="width: 300px; height: 141px; object-fit: contain;"></a>
-    <a href="https://serpapi.com/baidu-search-api?utm_source=github_daily_stock_analysis" target="_blank"><img src="../sources/serpapi_banner_zh.png" alt="輕鬆抓取搜尋引擎上的即時金融新聞數據 - SerpApi" width="300" height="141" style="width: 300px; height: 141px; object-fit: contain;"></a>
-  </p>
 </div>
 
 ## ✨ 功能特性
@@ -58,9 +41,9 @@
 
 | 類型 | 支援 |
 |------|------|
-| AI 模型 | [Anspire](https://open.anspire.cn/?share_code=QFBC0FYC)、[AIHubMix](https://aihubmix.com/?aff=CfMq)、Gemini、OpenAI 兼容、DeepSeek、通義千問、Claude、Ollama 本地模型等 |
-| 行情數據 | [TickFlow](https://tickflow.org/auth/register?ref=WDSGSPS5XC)、AkShare、Tushare、Pytdx、Baostock、YFinance、Longbridge |
-| 新聞搜尋 | [Anspire](https://open.anspire.cn/?share_code=QFBC0FYC)、[SerpAPI](https://serpapi.com/baidu-search-api?utm_source=github_daily_stock_analysis)、[Tavily](https://tavily.com/)、[Bocha](https://open.bocha.cn/)、[Brave](https://brave.com/search/api/)、[MiniMax](https://platform.minimaxi.com/)、SearXNG |
+| AI 模型 | [Anspire](https://open.anspire.cn/)、[AIHubMix](https://aihubmix.com/)、Gemini、OpenAI 兼容、DeepSeek、通義千問、Claude、Ollama 本地模型等 |
+| 行情數據 | [TickFlow](https://tickflow.org/auth/register)、AkShare、Tushare、Pytdx、Baostock、YFinance、Longbridge |
+| 新聞搜尋 | [Anspire](https://open.anspire.cn/)、[SerpAPI](https://serpapi.com/baidu-search-api)、[Tavily](https://tavily.com/)、[Bocha](https://open.bocha.cn/)、[Brave](https://brave.com/search/api/)、[MiniMax](https://platform.minimaxi.com/)、SearXNG |
 | 社交輿情 | [Stock Sentiment API](https://api.adanos.org/docs)（Reddit / X / Polymarket，僅美股，可選） |
 
 > 完整規則見 [數據源配置](./full-guide.md#数据源配置)。
@@ -73,7 +56,7 @@
 
 #### 1. Fork 本倉庫
 
-點擊右上角 `Fork` 按鈕（順便點個 Star 支援一下）。
+點擊右上角 `Fork` 按鈕。
 
 #### 2. 配置 Secrets
 
@@ -85,8 +68,8 @@
 
 | Secret 名稱 | 說明 | 必填 |
 |-------------|------|:----:|
-| `ANSPIRE_API_KEYS` | [Anspire](https://open.anspire.cn/?share_code=QFBC0FYC) API Key，一 Key 同時啟用全球熱門大模型和聯網搜尋，含本項目免費額度 | **推薦** |
-| `AIHUBMIX_KEY` | [AIHubMix](https://aihubmix.com/?aff=CfMq) API Key，一 Key 切換使用全系模型，本項目可享 10% 優惠 | **推薦** |
+| `ANSPIRE_API_KEYS` | Anspire API Key，一 Key 同時啟用全球熱門大模型和聯網搜尋 | **推薦** |
+| `AIHUBMIX_KEY` | AIHubMix API Key，一 Key 切換使用全系模型 | **推薦** |
 | `GEMINI_API_KEY` | Google Gemini API Key | 可選 |
 | `ANTHROPIC_API_KEY` | Anthropic Claude API Key | 可選 |
 | `OPENAI_API_KEY` | OpenAI 兼容 API Key（支援 DeepSeek、通義千問等） | 可選 |
@@ -119,8 +102,8 @@
 
 | Secret 名稱 | 說明 | 必填 |
 |-------------|------|:----:|
-| `ANSPIRE_API_KEYS` | [Anspire AI Search](https://aisearch.anspire.cn/)：中文內容特別優化，可增強 A 股分析效果；同一 Key 也可作為 Anspire 大模型網關兜底示例 | 推薦 |
-| `SERPAPI_API_KEYS` | [SerpAPI](https://serpapi.com/baidu-search-api?utm_source=github_daily_stock_analysis)：搜尋引擎結果補強，適合即時金融新聞 | 推薦 |
+| `ANSPIRE_API_KEYS` | Anspire AI Search：中文內容特別優化，可增強 A 股分析效果；同一 Key 也可作為 Anspire 大模型網關兜底示例 | 推薦 |
+| `SERPAPI_API_KEYS` | SerpAPI：搜尋引擎結果補強，適合即時金融新聞 | 推薦 |
 | `TAVILY_API_KEYS` | [Tavily](https://tavily.com/)：通用新聞搜尋 API | 可選 |
 | `BOCHA_API_KEYS` | [博查搜尋](https://open.bocha.cn/)：中文搜尋優化，支援 AI 摘要 | 可選 |
 | `BRAVE_API_KEYS` | [Brave Search](https://brave.com/search/api/)：隱私優先，美股資訊補強 | 可選 |
@@ -145,7 +128,7 @@
 
 ```bash
 # 克隆項目
-git clone https://github.com/ZhuLinsen/daily_stock_analysis.git && cd daily_stock_analysis
+git clone https://github.com/DesayGo/daily_stock_analysis.git && cd daily_stock_analysis
 
 # 安裝依賴
 pip install -r requirements.txt
@@ -234,52 +217,18 @@ python main.py --webui-only
 
 > Agent 具體參數、`skill` 命名兼容、多 Agent 模式和預算護欄見 [完整指南](./full-guide.md#本地-webui-管理界面) 與 [LLM 配置指南](./LLM_CONFIG_GUIDE.md)。
 
-## 相關項目 (Related Projects)
-
-DSA 聚焦日常分析報告；以下兩個同系列項目分別覆蓋選股、策略驗證與策略進化，適合按需延伸使用。它們目前獨立維護，後續會優先探索與 DSA 的候選股導入、回測驗證和報告聯動。
-
-- [AlphaSift](https://github.com/ZhuLinsen/alphasift)：多因子選股與全市場掃描，用於從股票池中整理候選標的。
-- [AlphaEvo](https://github.com/ZhuLinsen/alphaevo)：策略回測與自我進化，用於驗證策略規則，並透過迭代探索策略參數與組合。
-
 ## 🗺️ Roadmap
 
 查看已支援的功能和未來規劃：[更新日誌](./CHANGELOG.md)
-
-> 有建議？歡迎 [提交 Issue](https://github.com/ZhuLinsen/daily_stock_analysis/issues)
 
 > UI 正在持續調整與升級，部分頁面在過渡階段可能仍存在樣式、交互或兼容性問題。歡迎通過 Issue 或 Pull Request 一起完善。
 
 ---
 
-## ☕ 支持項目
-
-| 支付寶 (Alipay) | 微信支付 (WeChat) | 小紅書 |
-| :---: | :---: | :---: |
-| <img src="../sources/alipay.jpg" width="200" alt="Alipay"> | <img src="../sources/wechatpay.jpg" width="200" alt="WeChat Pay"> | <img src="../sources/xiaohongshu.png" width="200" alt="小紅書"> |
-
 ## 📄 License
 
-[MIT License](../LICENSE) © 2026 ZhuLinsen
-
-如果你在項目中使用或基於本項目進行二次開發，非常歡迎在 README 或文檔中註明來源並附上本倉庫鏈接。
-
-## 📬 聯繫與合作
-
-- GitHub Issues：[提交 Issue](https://github.com/ZhuLinsen/daily_stock_analysis/issues)
-- 合作郵箱：zhuls345@gmail.com（可溝通贊助合作、定制化開發、私有部署與二次開發）
-
-## ⭐ Star History
-
-**如果覺得有用，請給個 ⭐ Star 支持一下！**
-
-<a href="https://star-history.com/#ZhuLinsen/daily_stock_analysis&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ZhuLinsen/daily_stock_analysis&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ZhuLinsen/daily_stock_analysis&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=ZhuLinsen/daily_stock_analysis&type=Date" />
- </picture>
-</a>
+[MIT License](../LICENSE)
 
 ## ⚠️ 免責聲明
 
-本項目僅供學習和研究使用，不構成任何投資建議。股市有風險，投資需謹慎。作者不對使用本項目產生的任何損失負責。
+本項目僅供學習和研究使用，不構成任何投資建議。股市有風險，投資需謹慎。使用者需自行承擔相關風險。

@@ -59,8 +59,8 @@ Go to your forked repo → `Settings` → `Secrets and variables` → `Actions` 
 
 | Secret Name | Description | Required |
 |------------|------|:----:|
-| `ANSPIRE_API_KEYS` | [Anspire](https://open.anspire.cn/?share_code=QFBC0FYC) API key, one key for popular LLMs and Chinese-optimized web search with free quota for this project | Recommended |
-| `AIHUBMIX_KEY` | [AIHubMix](https://aihubmix.com/?aff=CfMq) API key, one key for multiple model families and a 10% top-up discount for this project | Recommended |
+| `ANSPIRE_API_KEYS` | [Anspire](https://open.anspire.cn/) API key, one key for popular LLMs and Chinese-optimized web search with free quota for this project | Recommended |
+| `AIHUBMIX_KEY` | [AIHubMix](https://aihubmix.com/) API key, one key for multiple model families and a 10% top-up discount for this project | Recommended |
 | `GEMINI_API_KEY` | Get free key from [Google AI Studio](https://aistudio.google.com/) | Optional |
 | `ANTHROPIC_API_KEY` | Anthropic Claude API Key | Optional |
 | `OPENAI_API_KEY` | OpenAI-compatible API Key (supports DeepSeek, Qwen, etc.) | Optional |
@@ -123,7 +123,7 @@ Go to your forked repo → `Settings` → `Secrets and variables` → `Actions` 
 |------------|------|:----:|
 | `STOCK_LIST` | Watchlist codes, e.g., `600519,300750,002594` | ✅ |
 | `ANSPIRE_API_KEYS` | [Anspire AI Search](https://aisearch.anspire.cn/) optimized for Chinese content; the same key can also be used for Anspire LLM fallback scenarios (example model: `Doubao-Seed-2.0-lite`) | Recommended |
-| `SERPAPI_API_KEYS` | [SerpAPI](https://serpapi.com/baidu-search-api?utm_source=github_daily_stock_analysis) search-engine results for realtime financial news | Recommended |
+| `SERPAPI_API_KEYS` | [SerpAPI](https://serpapi.com/baidu-search-api) search-engine results for realtime financial news | Recommended |
 | `TAVILY_API_KEYS` | [Tavily](https://tavily.com/) Search API (for news search) | Optional |
 | `BOCHA_API_KEYS` | [Bocha Search](https://open.bocha.cn/) Web Search API (Chinese search optimized, supports AI summaries, multiple keys comma-separated) | Optional |
 | `BRAVE_API_KEYS` | [Brave Search](https://brave.com/search/api/) API (privacy-first, US-stock news enrichment, comma-separated for multiple keys) | Optional |
@@ -177,8 +177,8 @@ Default schedule: Every weekday at **18:00 (Beijing Time)** automatic execution.
 | `LITELLM_FALLBACK_MODELS` | Fallback models, comma-separated | - | No |
 | `LLM_CHANNELS` | Channel names (comma-separated), use with `LLM_{NAME}_*`, see [LLM Config Guide](LLM_CONFIG_GUIDE_EN.md) | - | No |
 | `LITELLM_CONFIG` | Advanced model routing YAML path (expert use) | - | No |
-| `ANSPIRE_API_KEYS` | [Anspire](https://open.anspire.cn/?share_code=QFBC0FYC) API key, one key for the LLM gateway and search | - | Optional |
-| `AIHUBMIX_KEY` | [AIHubMix](https://aihubmix.com/?aff=CfMq) API key, one key for multiple model families | - | Optional |
+| `ANSPIRE_API_KEYS` | [Anspire](https://open.anspire.cn/) API key, one key for the LLM gateway and search | - | Optional |
+| `AIHUBMIX_KEY` | [AIHubMix](https://aihubmix.com/) API key, one key for multiple model families | - | Optional |
 | `GEMINI_API_KEY` | Google Gemini API Key | - | Optional |
 | `GEMINI_MODEL` | Primary model name (legacy, `LITELLM_MODEL` preferred) | `gemini-3.1-pro-preview` | No |
 | `GEMINI_MODEL_FALLBACK` | Fallback model (legacy) | `gemini-3-flash-preview` | No |
@@ -319,16 +319,16 @@ Default schedule: Every weekday at **18:00 (Beijing Time)** automatic execution.
 
 The image uses prebuilt frontend assets under `/app/static` at runtime, so the running `server` container does not require the `apps/dsa-web` source tree or runtime `npm`. If WebUI cannot be opened after Docker deployment, first verify that `/app/static/index.html` exists inside the container.
 
-Official image registries:
+Image registries:
 
-- GHCR: `ghcr.io/zhulinsen/daily_stock_analysis:<tag>`
-- Docker Hub: `<DOCKERHUB_USERNAME>/daily_stock_analysis:<tag>` (driven by the publisher's `DOCKERHUB_USERNAME` secret; the official release uses `zhulinsen/daily_stock_analysis`)
+- GHCR: `ghcr.io/<GHCR_NAMESPACE>/daily_stock_analysis:<tag>`
+- Docker Hub: `<DOCKERHUB_USERNAME>/daily_stock_analysis:<tag>` (driven by the publisher's `DOCKERHUB_USERNAME` secret)
 
 ### Quick Start
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/ZhuLinsen/daily_stock_analysis.git
+git clone https://github.com/DesayGo/daily_stock_analysis.git
 cd daily_stock_analysis
 
 # 2. Configure environment variables
@@ -347,13 +347,13 @@ docker-compose -f ./docker/docker-compose.yml up -d            # Start both mode
 docker-compose -f ./docker/docker-compose.yml logs -f server
 ```
 
-### Run Official Images Directly
+### Run Images Directly
 
 If you do not want to keep the source tree on the target machine, you can run the published image directly:
 
 ```bash
 # Web/API mode
-docker pull zhulinsen/daily_stock_analysis:latest
+docker pull <DOCKERHUB_USERNAME>/daily_stock_analysis:latest
 docker run -d \
   --name dsa-server \
   --env-file .env \
@@ -362,7 +362,7 @@ docker run -d \
   -v "$(pwd)/logs:/app/logs" \
   -v "$(pwd)/reports:/app/reports" \
   -v "$(pwd)/.env:/app/.env" \
-  zhulinsen/daily_stock_analysis:latest \
+  <DOCKERHUB_USERNAME>/daily_stock_analysis:latest \
   python main.py --serve-only --host 0.0.0.0 --port 8000
 
 # Scheduled-task mode
@@ -373,7 +373,7 @@ docker run -d \
   -v "$(pwd)/logs:/app/logs" \
   -v "$(pwd)/reports:/app/reports" \
   -v "$(pwd)/.env:/app/.env" \
-  zhulinsen/daily_stock_analysis:latest
+  <DOCKERHUB_USERNAME>/daily_stock_analysis:latest
 ```
 
 For pinned deployments or easier rollback, replace `latest` with a concrete version tag such as `v3.13.0`.
@@ -1039,4 +1039,4 @@ AGENT_EVENT_ALERT_RULES_JSON=[{"stock_code":"600519","alert_type":"price_cross",
 
 ---
 
-For more questions, please [submit an Issue](https://github.com/ZhuLinsen/daily_stock_analysis/issues)
+For more questions, please [submit an Issue](https://github.com/DesayGo/daily_stock_analysis/issues)
