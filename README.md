@@ -6,11 +6,9 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Ready-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions)
 
-> 🤖 基于 AI 大模型的 A股/港股/美股自选股智能分析系统，每日自动分析并推送「决策仪表盘」到企业微信/飞书/Telegram/Discord/Slack/邮箱
+> 🤖 基于 AI 大模型的 A股/港股/美股与国内期货智能分析系统，每日自动分析并推送「决策仪表盘」到企业微信/飞书/Telegram/Discord/Slack/邮箱
 
 [**功能特性**](#-功能特性) · [**快速开始**](#-快速开始) · [**推送效果**](#-推送效果) · [**完整指南**](docs/full-guide.md) · [**常见问题**](docs/FAQ.md) · [**更新日志**](docs/CHANGELOG.md)
-
-> 本次仅更新文档与部署说明，未随本次改动新增后端运行时能力；Anspire / AIHubMix / SerpAPI 等配置为现有能力的说明口径。
 
 简体中文 | [English](docs/README_EN.md) | [繁體中文](docs/README_CHT.md)
 
@@ -20,13 +18,14 @@
 
 | 模块 | 功能 | 说明 |
 |------|------|------|
-| AI | 决策仪表盘 | 一句话核心结论 + 评分 + 买卖点位 + 风险警报 + 操作检查清单 |
-| 分析 | 多维度分析 | 技术面、实时行情、筹码分布、新闻舆情、公告、资金流与基本面聚合 |
-| 市场 | 全球市场 | 支持 A股、港股、美股、美股指数及常见 ETF |
+| AI | 决策仪表盘 | 一句话核心结论 + 评分 + 入场/止损/目标点位 + 风险警报 + 操作检查清单 |
+| 分析 | 多维度分析 | 技术面、实时行情、筹码分布、新闻舆情、公告、资金流、基本面与期货多空趋势聚合 |
+| 市场 | 全球市场 | 支持 A股、港股、美股、美股指数、常见 ETF 及国内期货 |
+| 期货 | 国内期货分析 | 支持主力连续与具体合约、动态合约搜索、多空双向建议、保证金/杠杆/换月风险提示 |
 | 策略 | 市场策略系统 | 内置 A股复盘、美股 Regime、均线、缠论、波浪、情绪周期等策略能力 |
 | 复盘 | 大盘复盘 | 每日市场概览、指数表现、涨跌统计与板块强弱（支持 cn / hk / us / both） |
 | Web | 双主题工作台 | 支持手动分析、配置管理、任务进度、历史报告、回测、持仓管理 |
-| 导入 | 智能导入与补全 | 支持图片、CSV/Excel、剪贴板导入，自选股输入支持代码/名称/拼音/别名补全 |
+| 导入 | 智能导入与补全 | 支持图片、CSV/Excel、剪贴板导入，股票与期货输入支持代码/名称/拼音/别名补全 |
 | 历史 | 报告管理 | 支持历史报告查看、完整 Markdown 报告、重新分析与批量管理 |
 | 回测 | AI 回测验证 | 对历史分析进行事后验证，查看方向准确率和模拟收益 |
 | Agent 问股 | 策略对话 | 多轮策略问答，支持均线金叉/缠论/波浪等 11 种内置策略，Web/Bot/API 全链路 |
@@ -40,7 +39,7 @@
 | 类型 | 支持 |
 |------|------|
 | AI 模型 | [Anspire](https://open.anspire.cn/)、[AIHubMix](https://aihubmix.com/)、Gemini、OpenAI 兼容、DeepSeek、通义千问、Claude、Ollama 本地模型等 |
-| 行情数据 | [TickFlow](https://tickflow.org/auth/register)、AkShare、Tushare、Pytdx、Baostock、YFinance、Longbridge |
+| 行情数据 | [TickFlow](https://tickflow.org/auth/register)、AkShare、Tushare、Pytdx、Baostock、YFinance、Longbridge；国内期货实时与日线数据通过 AkShare/Sina 获取 |
 | 新闻搜索 | [Anspire](https://open.anspire.cn/)、[SerpAPI](https://serpapi.com/baidu-search-api)、[Tavily](https://tavily.com/)、[Bocha](https://open.bocha.cn/)、[Brave](https://brave.com/search/api/)、[MiniMax](https://platform.minimaxi.com/)、SearXNG |
 | 社交舆情 | [Stock Sentiment API](https://api.adanos.org/docs)（Reddit / X / Polymarket，仅美股，可选） |
 
@@ -95,6 +94,13 @@
 |------------|------|:----:|
 | `STOCK_LIST` | 自选股代码，如 `600519,hk00700,AAPL,TSLA` | ✅ |
 
+**期货配置（可选）**
+
+| Secret 名称 | 说明 | 必填 |
+|------------|------|:----:|
+| `FUTURES_ENABLED` | 是否启用 `.env` / Secrets 中的默认期货列表 | 可选 |
+| `FUTURES_LIST` | 国内期货品种或合约，如 `RB,I,AU,JM2609,焦煤2609` | 可选 |
+
 **新闻源配置（推荐）**
 
 新闻源会显著影响舆情、公告、事件和催化因素质量，建议至少配置一个搜索服务。
@@ -145,10 +151,14 @@ python main.py
 python main.py --debug
 python main.py --dry-run
 python main.py --stocks 600519,hk00700,AAPL
+python main.py --futures RB,I,AU
+python main.py --futures 焦煤2609
 python main.py --market-review
 python main.py --schedule
 python main.py --serve-only
 ```
+
+期货模式支持 `RB`、`I`、`AU` 等品种主力连续合约，也支持 `JM2609`、`焦煤2609` 这类具体合约。Web 首页切换到“期货”后可通过中文品种、合约代码或别名搜索，交易建议会使用做多/观望/做空语义；详细说明见 [国内期货分析](docs/full-guide.md#国内期货分析)。
 
 > Docker 部署、定时任务、云服务器访问请参考 [完整指南](docs/full-guide.md)；桌面客户端打包请参考 [桌面端打包说明](docs/desktop-package.md)。
 

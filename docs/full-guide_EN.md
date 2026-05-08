@@ -298,6 +298,8 @@ Default schedule: Every weekday at **18:00 (Beijing Time)** automatic execution.
 | Variable | Description | Default |
 |--------|------|--------|
 | `STOCK_LIST` | Watchlist codes (comma-separated) | - |
+| `FUTURES_ENABLED` | Enable the default domestic futures list from environment configuration | `false` |
+| `FUTURES_LIST` | Domestic futures varieties or contracts (comma-separated), e.g. `RB,I,AU,JM2609` | - |
 | `MAX_WORKERS` | Concurrent threads | `3` |
 | `MARKET_REVIEW_ENABLED` | Enable market review | `true` |
 | `MARKET_REVIEW_REGION` | Market review region: cn (A-shares), hk (HK stocks), us (US stocks), both (all three markets) | `cn` |
@@ -500,6 +502,8 @@ python main.py                        # Full analysis (stocks + market review)
 python main.py --market-review        # Market review only
 python main.py --no-market-review     # Stock analysis only
 python main.py --stocks 600519,300750 # Specify stocks
+python main.py --futures RB,I,AU      # Analyze domestic futures main contracts
+python main.py --futures JM2609       # Analyze a concrete futures contract
 python main.py --dry-run              # Fetch data only, no AI analysis
 python main.py --no-notify            # Don't send notifications
 python main.py --schedule             # Scheduled task mode
@@ -973,6 +977,43 @@ python main.py --serve-only --host 0.0.0.0 --port 8888
 | A-shares | 6-digit number | `600519`, `000001`, `300750` |
 | BSE (Beijing) | 8/4/92 prefix, 6-digit | `920748`, `838163`, `430047` |
 | HK stocks | hk + 5-digit number | `hk00700`, `hk09988` |
+
+### Domestic Futures Analysis
+
+Domestic futures analysis uses a separate `futures` asset type for commodity and financial futures. It focuses on trend, support/resistance, volume and price structure, margin/leverage, rollover, and supply-demand risks. It does not apply stock-only logic such as fundamentals, chip distribution, shareholders, or equity valuation.
+
+Supported inputs:
+
+| Input | Meaning | Examples |
+|------|------|------|
+| Variety code | Converted to the main continuous contract | `RB`, `I`, `AU` |
+| Month contract code | Keeps the contract month | `JM2609`, `IF2606` |
+| Chinese variety + month | Resolved through aliases | `焦煤2609`, `螺纹钢2605` |
+
+```bash
+# One-off analysis
+python main.py --futures RB,I,AU --no-notify
+python main.py --futures JM2609 --no-notify
+
+# Default futures list from .env
+FUTURES_ENABLED=true
+FUTURES_LIST=RB,I,AU,JM2609
+python main.py --futures RB,I,AU,JM2609
+```
+
+In the Web UI, switch the analysis entry to `Futures` and search by variety name, contract code, or alias. The search box calls `GET /api/v1/stocks/futures-index` to load currently tradable futures candidates from AkShare, including variety, main continuous, and concrete contracts from SHFE, DCE, CZCE, GFEX, and CFFEX responses. If the endpoint fails, the frontend falls back to the built-in baseline candidates.
+
+API requests can pass `asset_type=futures`:
+
+```json
+{
+  "asset_type": "futures",
+  "stock_codes": ["RB", "I", "JM2609"],
+  "report_type": "detailed"
+}
+```
+
+Futures recommendations keep the compatible `decision_type=buy/hold/sell` field, but interpret it as long/watch/short in futures context. Web strategy levels are shown as entry levels instead of stock buy levels, so short-side recommendations are not mistaken for stock selling or position reduction.
 
 ### Notes
 

@@ -6,13 +6,11 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Ready-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions)
 
-**基於 AI 大模型的 A股/港股/美股自選股智能分析系統**
+**基於 AI 大模型的 A股/港股/美股與國內期貨智能分析系統**
 
-每日自動分析自選股 -> 生成決策儀表盤 -> 推送到 Telegram / Discord / Slack / 郵件 / 企業微信 / 飛書。
+每日自動分析自選標的 -> 生成決策儀表盤 -> 推送到 Telegram / Discord / Slack / 郵件 / 企業微信 / 飛書。
 
 [**功能特性**](#-功能特性) · [**快速開始**](#-快速開始) · [**推送效果**](#-推送效果) · [**完整指南**](./full-guide.md) · [**常見問題**](./FAQ.md) · [**更新日誌**](./CHANGELOG.md)
-
-> 本次為文件更新，未隨本次變更引入新的運行時能力；Anspire / AIHubMix / SerpAPI 等供應商配置為既有能力的使用口徑補充。
 
 繁體中文 | [English](README_EN.md) | [简体中文](../README.md)
 
@@ -22,13 +20,14 @@
 
 | 模組 | 功能 | 說明 |
 |------|------|------|
-| AI | 決策儀表盤 | 一句話核心結論 + 評分 + 買賣點位 + 風險警報 + 操作檢查清單 |
-| 分析 | 多維度分析 | 技術面、即時行情、籌碼分布、新聞輿情、公告、資金流與基本面聚合 |
-| 市場 | 全球市場 | 支援 A股、港股、美股、美股指數及常見 ETF |
+| AI | 決策儀表盤 | 一句話核心結論 + 評分 + 入場/止損/目標點位 + 風險警報 + 操作檢查清單 |
+| 分析 | 多維度分析 | 技術面、即時行情、籌碼分布、新聞輿情、公告、資金流、基本面與期貨多空趨勢聚合 |
+| 市場 | 全球市場 | 支援 A股、港股、美股、美股指數、常見 ETF 及國內期貨 |
+| 期貨 | 國內期貨分析 | 支援主力連續與具體合約、動態合約搜尋、多空雙向建議、保證金/槓桿/換月風險提示 |
 | 策略 | 市場策略系統 | 內建 A股復盤、美股 Regime、均線、纏論、波浪、情緒週期等策略能力 |
 | 復盤 | 大盤復盤 | 每日市場概覽、指數表現、漲跌統計與板塊強弱（支援 cn / hk / us / both） |
 | Web | 雙主題工作台 | 支援手動分析、配置管理、任務進度、歷史報告、回測、持倉管理 |
-| 匯入 | 智能匯入與補全 | 支援圖片、CSV/Excel、剪貼簿匯入，自選股輸入支援代碼/名稱/拼音/別名補全 |
+| 匯入 | 智能匯入與補全 | 支援圖片、CSV/Excel、剪貼簿匯入，股票與期貨輸入支援代碼/名稱/拼音/別名補全 |
 | 歷史 | 報告管理 | 支援歷史報告查看、完整 Markdown 報告、重新分析與批量管理 |
 | 回測 | AI 回測驗證 | 對歷史分析進行事後驗證，查看方向準確率和模擬收益 |
 | Agent 問股 | 策略對話 | 多輪策略問答，支援均線金叉/纏論/波浪等 11 種內建策略，Web/Bot/API 全鏈路 |
@@ -42,7 +41,7 @@
 | 類型 | 支援 |
 |------|------|
 | AI 模型 | [Anspire](https://open.anspire.cn/)、[AIHubMix](https://aihubmix.com/)、Gemini、OpenAI 兼容、DeepSeek、通義千問、Claude、Ollama 本地模型等 |
-| 行情數據 | [TickFlow](https://tickflow.org/auth/register)、AkShare、Tushare、Pytdx、Baostock、YFinance、Longbridge |
+| 行情數據 | [TickFlow](https://tickflow.org/auth/register)、AkShare、Tushare、Pytdx、Baostock、YFinance、Longbridge；國內期貨即時與日線數據透過 AkShare/Sina 獲取 |
 | 新聞搜尋 | [Anspire](https://open.anspire.cn/)、[SerpAPI](https://serpapi.com/baidu-search-api)、[Tavily](https://tavily.com/)、[Bocha](https://open.bocha.cn/)、[Brave](https://brave.com/search/api/)、[MiniMax](https://platform.minimaxi.com/)、SearXNG |
 | 社交輿情 | [Stock Sentiment API](https://api.adanos.org/docs)（Reddit / X / Polymarket，僅美股，可選） |
 
@@ -96,6 +95,13 @@
 |-------------|------|:----:|
 | `STOCK_LIST` | 自選股代碼，如 `600519,hk00700,AAPL,TSLA` | ✅ |
 
+**期貨配置（可選）**
+
+| Secret 名稱 | 說明 | 必填 |
+|-------------|------|:----:|
+| `FUTURES_ENABLED` | 是否啟用 `.env` / Secrets 中的預設期貨列表 | 可選 |
+| `FUTURES_LIST` | 國內期貨品種或合約，如 `RB,I,AU,JM2609,焦煤2609` | 可選 |
+
 **新聞源配置（推薦）**
 
 新聞源會顯著影響輿情、公告、事件和催化因素品質，建議至少配置一個搜尋服務。
@@ -146,10 +152,14 @@ python main.py
 python main.py --debug
 python main.py --dry-run
 python main.py --stocks 600519,hk00700,AAPL
+python main.py --futures RB,I,AU
+python main.py --futures 焦煤2609
 python main.py --market-review
 python main.py --schedule
 python main.py --serve-only
 ```
+
+期貨模式支援 `RB`、`I`、`AU` 等品種主力連續合約，也支援 `JM2609`、`焦煤2609` 這類具體合約。Web 首頁切換到「期貨」後可透過中文品種、合約代碼或別名搜尋，交易建議會使用做多/觀望/做空語義；詳細說明見 [國內期貨分析](./full-guide.md#国内期货分析)。
 
 > Docker 部署、定時任務、雲端伺服器訪問請參考 [完整指南](./full-guide.md)；桌面客戶端打包請參考 [桌面端打包說明](./desktop-package.md)。
 

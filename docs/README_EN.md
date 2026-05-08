@@ -6,13 +6,11 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Ready-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions)
 
-**AI-powered stock analysis system for A-shares / Hong Kong / US stocks**
+**AI-powered analysis system for A-shares / Hong Kong / US stocks and domestic futures**
 
 Analyze your watchlist daily -> generate a decision dashboard -> push to Telegram / Discord / Slack / Email / WeChat Work / Feishu.
 
 [**Key Features**](#-key-features) · [**Quick Start**](#-quick-start) · [**Sample Output**](#-sample-output) · [**Full Guide**](./full-guide_EN.md) · [**FAQ**](./FAQ_EN.md) · [**Changelog**](./CHANGELOG.md)
-
-> This PR-doc update is documentation-only and does not introduce runtime implementation changes. Provider recommendations for Anspire / AIHubMix / SerpAPI reflect existing runtime capabilities and configuration semantics.
 
 English | [简体中文](../README.md) | [繁體中文](README_CHT.md)
 
@@ -23,12 +21,13 @@ English | [简体中文](../README.md) | [繁體中文](README_CHT.md)
 | Module | Feature | Description |
 |--------|---------|-------------|
 | AI | Decision Dashboard | One-sentence conclusion + score + entry/exit levels + risk alerts + action checklist |
-| Analysis | Multi-dimensional Analysis | Technicals, realtime quotes, chip distribution, news sentiment, announcements, capital flow, and fundamentals |
-| Market | Global Markets | A-shares, Hong Kong stocks, US stocks, US indices, and common ETFs |
+| Analysis | Multi-dimensional Analysis | Technicals, realtime quotes, chip distribution, news sentiment, announcements, capital flow, fundamentals, and futures trend context |
+| Market | Global Markets | A-shares, Hong Kong stocks, US stocks, US indices, common ETFs, and domestic futures |
+| Futures | Domestic Futures Analysis | Main continuous and month contracts, dynamic contract search, long/short recommendations, and margin/leverage/rollover risk notes |
 | Strategy | Market Strategy System | A-share review, US regime strategy, moving averages, Chan theory, Elliott wave, and sentiment-cycle support |
 | Review | Market Review | Daily market overview, index performance, breadth, and sector strength (supports cn / hk / us / both) |
 | Web | Dual-theme Workspace | Manual analysis, settings, task progress, history, backtest, and portfolio management |
-| Import | Smart Import & Autocomplete | Image, CSV/Excel, and clipboard import; search by code, name, pinyin, and aliases |
+| Import | Smart Import & Autocomplete | Image, CSV/Excel, and clipboard import; stock and futures search by code, name, pinyin, and aliases |
 | History | Report Management | Full Markdown reports, rerun analysis, history browsing, and batch management |
 | Backtest | AI Backtest Validation | Validate historical analysis with directional accuracy and simulated return views |
 | Agent Q&A | Strategy Chat | Multi-turn strategy chat with 11 built-in strategies across Web/Bot/API |
@@ -42,7 +41,7 @@ English | [简体中文](../README.md) | [繁體中文](README_CHT.md)
 | Type | Supported |
 |------|-----------|
 | AI Models | [Anspire](https://open.anspire.cn/), [AIHubMix](https://aihubmix.com/), Gemini, OpenAI-compatible providers, DeepSeek, Qwen, Claude, Ollama |
-| Market Data | [TickFlow](https://tickflow.org/auth/register), AkShare, Tushare, Pytdx, Baostock, YFinance, Longbridge |
+| Market Data | [TickFlow](https://tickflow.org/auth/register), AkShare, Tushare, Pytdx, Baostock, YFinance, Longbridge; domestic futures realtime and daily data via AkShare/Sina |
 | News Search | [Anspire](https://open.anspire.cn/), [SerpAPI](https://serpapi.com/baidu-search-api), [Tavily](https://tavily.com/), [Bocha](https://open.bocha.cn/), [Brave](https://brave.com/search/api/), [MiniMax](https://platform.minimaxi.com/), SearXNG |
 | Social Sentiment | [Stock Sentiment API](https://api.adanos.org/docs) for Reddit / X / Polymarket, US stocks only |
 
@@ -96,6 +95,13 @@ More channels, signatures, email groups, and Markdown-to-image settings are in [
 |-------------|-------------|:--------:|
 | `STOCK_LIST` | Watchlist codes, such as `600519,hk00700,AAPL,TSLA` | ✅ |
 
+**Futures configuration (optional)**
+
+| Secret Name | Description | Required |
+|-------------|-------------|:--------:|
+| `FUTURES_ENABLED` | Enable the default futures list from `.env` / Secrets | Optional |
+| `FUTURES_LIST` | Domestic futures varieties or contracts, such as `RB,I,AU,JM2609` | Optional |
+
 **News sources (recommended)**
 
 News search strongly improves sentiment, announcements, events, and catalyst quality. Configure at least one search provider if possible.
@@ -146,10 +152,14 @@ Common commands:
 python main.py --debug
 python main.py --dry-run
 python main.py --stocks 600519,hk00700,AAPL
+python main.py --futures RB,I,AU
+python main.py --futures JM2609
 python main.py --market-review
 python main.py --schedule
 python main.py --serve-only
 ```
+
+Futures mode supports main continuous contracts such as `RB`, `I`, and `AU`, and month contracts such as `JM2609`. In the Web UI, switch to the Futures tab and search by Chinese variety name, contract code, or aliases; recommendations use long/watch/short semantics. See [Domestic Futures Analysis](./full-guide_EN.md#domestic-futures-analysis) for details.
 
 > Docker deployment, scheduling, and cloud-server WebUI access are documented in the [Full Guide](./full-guide_EN.md).
 
